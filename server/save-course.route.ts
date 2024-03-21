@@ -1,12 +1,8 @@
-
-import {Request, Response} from 'express';
-import {findCourseById} from './db-data';
-
+import { Request, Response } from 'express';
+import { findCourseById } from './db-data';
 
 export function saveCourse(req: Request, res: Response) {
-
-  const id = req.params["id"] as any,
-    changes = req.body;
+  const id = req.params["id"] as any, changes = req.body;
 
   console.log("Saving course", id, JSON.stringify(changes));
 
@@ -15,6 +11,5 @@ export function saveCourse(req: Request, res: Response) {
   course.titles = changes.titles;
 
   res.status(200).json(course);
-
 }
 
