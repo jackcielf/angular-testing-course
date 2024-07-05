@@ -5,8 +5,11 @@ import { Course } from "../model/course";
 import { map } from "rxjs/operators";
 import { Lesson } from "../model/lesson";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class CoursesService {
+  
   constructor(private http: HttpClient) {}
 
   findCourseById(courseId: number): Observable<Course> {

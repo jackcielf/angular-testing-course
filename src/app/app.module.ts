@@ -30,6 +30,7 @@ import { CourseDialogComponent } from './courses/course-dialog/course-dialog.com
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatMomentDateModule} from "@angular/material-moment-adapter";
 import {CoursesModule} from './courses/courses.module';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 @NgModule({
     declarations: [
@@ -42,7 +43,8 @@ import {CoursesModule} from './courses/courses.module';
         MatToolbarModule,
         MatButtonModule,
         CoursesModule,
-        AppRoutingModule
+        AppRoutingModule,
+        HttpClientTestingModule
     ],
     providers: [
     ],
