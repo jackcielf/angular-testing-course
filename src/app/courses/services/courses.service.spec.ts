@@ -1,7 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from "@angular/core/testing";
 import { CoursesService } from "./courses.service";
-import { COURSES } from '../../../../server/db-data';
+import { COURSES, findLessonsForCourse } from '../../../../server/db-data';
 import { Course } from '../model/course';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -47,7 +47,7 @@ describe(`CoursesService`, () => {
     const req = httpTestingController.expectOne('/api/courses/12');
     expect(req.request.method).toEqual('GET');
 
-    req.flush(COURSES[12]);
+    req.flush(COURSES[12]); // Simula a solicitação
   });
 
   it(`Should save the course data`, () => {
@@ -95,6 +95,26 @@ describe(`CoursesService`, () => {
       status: 500,
       statusText: 'Internal Server Error'
     });
+  });
+
+  it(`Should find a list of lessons`, () => {
+    
+    coursesService.findLessons(12).subscribe(lessons => {
+      expect(lessons).toBeTruthy();
+      expect(lessons.length).toBe(3);
+    });
+
+    const req = httpTestingController.expectOne(req => req.url == '/api/lessons'); // Outra forma determinar a rota de requisição
+    expect(req.request.method).toEqual('GET');
+
+    // Verifica se todos os parametros estão sendo passados como o esperado
+    expect(req.request.params.get('courseId')).toEqual('12');
+    expect(req.request.params.get('filter')).toEqual('');
+    expect(req.request.params.get('sortOrder')).toEqual('asc');
+    expect(req.request.params.get('pageNumber')).toEqual('0');
+    expect(req.request.params.get('pageSize')).toEqual('3');
+
+    req.flush({ payload: findLessonsForCourse(12).slice(0, 3) });
   });
 
   afterEach(() => {
