@@ -16,7 +16,7 @@ describe(`CalculatorService`, () => {
       ],
     });
 
-    calculatorService = TestBed.get(CalculatorService);
+    calculatorService = TestBed.inject(CalculatorService);
   });
 
   it(`Should add two numbers`, () => {
